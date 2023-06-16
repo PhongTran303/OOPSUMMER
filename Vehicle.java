@@ -2,7 +2,6 @@ package bai4;
 
 public class Vehicle {
 	
-	private int id;
 	private String name;
 	private String type;
 	private double price;
@@ -11,9 +10,8 @@ public class Vehicle {
 	public Vehicle() {
 	}
 	
-	public Vehicle(int id, String name, String type, double price, int xylanh)
+	public Vehicle(String name, String type, double price, int xylanh)
 	{
-		this.id = id;
 		this.name = name;
 		this.type = type;
 		setPrice(price);
@@ -53,16 +51,35 @@ public class Vehicle {
 	}
 	public void setPrice(double price) {
 		if(price<0)
-		this.price = price;
+		{
+			System.out.println("Nhap sai");
+		}else {
+				this.price = price;
+		}
 	}
 	
 	public int getXylanh() {
 		return xylanh;
 	}
 	public void setXylanh(int xylanh) {
+		if(xylanh <0)
+		{
+			System.out.println("Nhap sai");
+		}
+		else {
 		this.xylanh = xylanh;
+	}	 
+}
+	
+	@Override
+	public String toString() {
+		return "Vehicle [name=" + name + ", type=" + type + ", price=" + price+ ", xylanh=" + xylanh + "]";
 	}
-	 
+	
+	
+	void xuatBang() {
+		System.out.printf("%-10s %-10s %5d %10.2f %8.5f \n ",name,type,xylanh,price,tax());
+	}
 	
 }
 
