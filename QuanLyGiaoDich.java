@@ -1,63 +1,47 @@
-package bai3;
+package bai4;
 import java.util.ArrayList;
-import java.util.List;
+
 public class QuanLyGiaoDich {
     public static void main(String[] args) {
-        List<GiaoDich> danhSachGiaoDich = new ArrayList<>();
+        ArrayList<GiaoDich> danhSachGiaoDich = new ArrayList<>();
 
-        // Tạo sẵn 3 giao dịch vàng
-        danhSachGiaoDich.add(new GiaoDichVang("VD001", "01/07/2023", 50, 10, "24K"));
-        danhSachGiaoDich.add(new GiaoDichVang("VD002", "02/07/2023", 45, 5, "18K"));
-        danhSachGiaoDich.add(new GiaoDichVang("VD003", "03/07/2023", 55, 8, "9999"));
+        // Thêm các giao dịch vào danh sách (không nhập từ bàn phím)
+        danhSachGiaoDich.add(new GiaoDichDat("GD001", "01/09/2013", 1000000, 200, "A"));
+        danhSachGiaoDich.add(new GiaoDichDat("GD002", "02/09/2013", 1500000, 300, "B"));
+        danhSachGiaoDich.add(new GiaoDichDat("GD003", "03/09/2013", 1200000, 250, "C"));
 
-        // Tạo sẵn 3 giao dịch tiền tệ
-        danhSachGiaoDich.add(new GiaoDichTienTe("TT001", "01/07/2023", 1.5, 1000, 23000, "USD"));
-        danhSachGiaoDich.add(new GiaoDichTienTe("TT002", "02/07/2023", 2.0, 500, 26000, "EUR"));
-        danhSachGiaoDich.add(new GiaoDichTienTe("TT003", "03/07/2023", 1.8, 800, 1, "VND"));
+        danhSachGiaoDich.add(new GiaoDichNha("GD004", "01/09/2013", 2000000, 100, "cao cấp", "123 ABC Street"));
+        danhSachGiaoDich.add(new GiaoDichNha("GD005", "02/09/2013", 1500000, 120, "thường", "456 XYZ Street"));
+        danhSachGiaoDich.add(new GiaoDichNha("GD006", "03/09/2013", 1800000, 150, "thường", "789 DEF Street"));
 
-        // Tính tổng số lượng cho từng loại
-        int tongSoLuongVang = 0;
-        int tongSoLuongTienTe = 0;
+        int countGiaoDichDat = 0;
+        int countGiaoDichNha = 0;
+        double tongThanhTienGiaoDichDat= 0;
+
         for (GiaoDich giaoDich : danhSachGiaoDich) {
-            if (giaoDich instanceof GiaoDichVang) {
-                tongSoLuongVang += giaoDich.soLuong;
-            } else if (giaoDich instanceof GiaoDichTienTe) {
-                tongSoLuongTienTe += giaoDich.soLuong;
+            if (giaoDich instanceof GiaoDichDat) {
+                countGiaoDichDat++;
+                tongThanhTienGiaoDichDat += giaoDich.thanhTien();
+            } else if (giaoDich instanceof GiaoDichNha) {
+                countGiaoDichNha++;
             }
         }
 
-        System.out.println("Tổng số lượng giao dịch vàng: " + tongSoLuongVang);
-        System.out.println("Tổng số lượng giao dịch tiền tệ: " + tongSoLuongTienTe);
+        // Tính trung bình thành tiền của giao dịch đất
+        double trungBinhThanhTienGiaoDichDat = tongThanhTienGiaoDichDat / countGiaoDichDat;
 
-        // Tính trung bình thành tiền của giao dịch tiền tệ
-        double tongThanhTienTienTe = 0;
-        int soLuongGiaoDichTienTe = 0;
+        System.out.println("Tổng số lượng giao dịch đất: " + countGiaoDichDat);
+        System.out.println("Tổng số lượng giao dịch nhà: " + countGiaoDichNha);
+        System.out.println("Trung bình thành tiền của giao dịch đất: " + trungBinhThanhTienGiaoDichDat);
+
+        System.out.println("Các giao dịch trong tháng 9 năm 2013:");
         for (GiaoDich giaoDich : danhSachGiaoDich) {
-            if (giaoDich instanceof GiaoDichTienTe) {
-                tongThanhTienTienTe += giaoDich.tinhThanhTien();
-                soLuongGiaoDichTienTe++;
-            }
-        }
-        double trungBinhThanhTienTienTe = tongThanhTienTienTe / soLuongGiaoDichTienTe;
-
-        System.out.println("Trung bình thành tiền của giao dịch tiền tệ: " + trungBinhThanhTienTienTe);
-
-        // Xuất ra các giao dịch có đơn giá > 1 tỷ
-        System.out.println("Các giao dịch có đơn giá > 1 tỷ:");
-        for (GiaoDich giaoDich : danhSachGiaoDich) {
-            if (giaoDich.donGia > 1000000000) {
-                System.out.println("Mã giao dịch: " + giaoDich.maGiaoDich);
-                System.out.println("Ngày giao dịch: " + giaoDich.ngayGiaoDich);
-                System.out.println("Đơn giá: " + giaoDich.donGia);
-                System.out.println("Số lượng: " + giaoDich.soLuong);
-                if (giaoDich instanceof GiaoDichVang) {
-                    System.out.println("Loại vàng: " + ((GiaoDichVang) giaoDich).loaiVang);
-                } else if (giaoDich instanceof GiaoDichTienTe) {
-                    System.out.println("Loại tiền tệ: " + ((GiaoDichTienTe) giaoDich).loaiTienTe);
-                }
-                System.out.println("Thành tiền: " + giaoDich.tinhThanhTien());
-                System.out.println("----------");
+            if (giaoDich.ngayGiaoDich.startsWith("09/2013")) {
+                System.out.println(giaoDich.maGiaoDich + " - " + giaoDich.ngayGiaoDich);
             }
         }
     }
     }
+
+
+
